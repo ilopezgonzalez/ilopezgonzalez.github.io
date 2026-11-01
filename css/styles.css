@@ -1,0 +1,677 @@
+
+/* ==============================
+   GENERAL
+============================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: #F5F4ED;
+    color: #171717;
+    font-family: Arial, sans-serif;
+}
+
+
+/* ==============================
+   HEADER
+============================== */
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 7%;
+    border-bottom: 1px solid #DDDED5;
+}
+
+.logo {
+    font-size: 30px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #171717;
+}
+
+.logo span {
+    color: #C4F13A;
+}
+
+.navigation {
+    display: flex;
+    gap: 35px;
+}
+
+.navigation a {
+    text-decoration: none;
+    color: #171717;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    transition: color 0.3s;
+}
+
+.navigation a:hover {
+    color: #8AAE12;
+}
+
+
+/* ==============================
+   HERO
+============================== */
+
+.hero {
+    display: grid;
+    grid-template-columns: 1fr 0.85fr;
+    align-items: center;
+    gap: 60px;
+    min-height: 75vh;
+    padding: 70px 7%;
+}
+
+.hero-eyebrow {
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: #77776F;
+    margin-bottom: 25px;
+}
+
+.hero-content h1 {
+    font-size: clamp(45px, 5vw, 75px);
+    line-height: 1.05;
+    margin-bottom: 25px;
+    max-width: 650px;
+}
+
+.hero-content h1 span,
+.hero-content h2 span {
+    color: #C4F13A;
+}
+
+.hero-content h2 {
+    font-size: 25px;
+    margin-bottom: 20px;
+}
+
+.hero-description {
+    color: #66665F;
+    line-height: 1.8;
+    max-width: 500px;
+    margin-bottom: 35px;
+}
+
+.hero-button {
+    display: inline-block;
+    background-color: #C4F13A;
+    color: #171717;
+    text-decoration: none;
+    padding: 16px 25px;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    transition: background-color 0.3s;
+}
+
+.hero-button:hover {
+    background-color: #A9D51F;
+}
+
+.hero-visual {
+    background-color: #171717;
+    min-height: 480px;
+    padding: 45px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.visual-content p {
+    font-size: clamp(55px, 7vw, 100px);
+    font-weight: bold;
+    line-height: 0.95;
+    color: #F5F4ED;
+}
+
+.visual-content p:first-child {
+    color: #C4F13A;
+}
+
+.visual-footer {
+    display: flex;
+    justify-content: space-between;
+    color: #A5A59B;
+    font-size: 10px;
+    letter-spacing: 2px;
+}
+
+
+/* ==============================
+   SECTION HEADINGS
+============================== */
+
+.section-heading {
+    margin-bottom: 65px;
+}
+
+.section-heading p {
+    color: #77776F;
+    font-size: 12px;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+}
+
+.section-heading h2 {
+    font-size: clamp(40px, 5vw, 65px);
+    line-height: 1;
+}
+
+.section-heading h2 span {
+    color: #C4F13A;
+}
+
+
+/* ==============================
+   ABOUT
+============================== */
+
+.about {
+    padding: 110px 7%;
+    border-top: 1px solid #DDDED5;
+}
+
+.about-content {
+    display: flex;
+    flex-direction: column;
+    gap: 55px;
+    max-width: 1000px;
+}
+
+.about-item {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 30px;
+}
+
+.about-item > h3 {
+    font-size: 18px;
+    color: #A0A097;
+}
+
+.about-item h4 {
+    font-size: 15px;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+}
+
+.about-item p {
+    color: #66665F;
+    line-height: 1.8;
+    margin-bottom: 15px;
+    text-align: justify;
+    max-width: 850px;
+}
+
+
+/* ==============================
+   TECH STACK
+============================== */
+
+.stack {
+    padding: 110px 7%;
+    border-top: 1px solid #DDDED5;
+}
+
+/* Categorías de tecnologías */
+
+.tech-category {
+    padding: 10px 0;
+    margin-bottom: 5px;
+}
+
+.tech-category h3 {
+    font-size: 17px;
+    margin-bottom: 20px;
+}
+
+/* Distribución de iconos */
+
+.tech-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 35px;
+}
+
+.tech-item {
+    width: 115px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: transform 0.3s;
+}
+
+.tech-item:hover {
+    transform: translateY(-5px);
+}
+
+.tech-item img {
+    width: 55px;
+    height: 55px;
+    object-fit: contain;
+    margin-bottom: 15px;
+}
+
+.tech-item p {
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.tech-item span {
+    font-size: 11px;
+    color: #77776F;
+    margin-top: 6px;
+}
+
+/* Currently Learning */
+
+.learning-section {
+    margin-top: 65px;
+    padding: 40px;
+    background-color: #EAE9E1;
+}
+
+.learning-heading {
+    margin-bottom: 30px;
+}
+
+.learning-heading h3 {
+    font-size: 25px;
+    margin-bottom: 12px;
+}
+
+.learning-heading h3 span {
+    color: #C4F13A;
+}
+
+.learning-heading p {
+    color: #77776F;
+    font-size: 12px;
+    letter-spacing: 2px;
+}
+
+.dataflex-icon {
+    width: 65px !important;
+    height: 55px !important;
+    object-fit: contain;
+}
+
+
+/* ==============================
+   SELECTED WORK
+============================== */
+
+.work {
+    padding: 110px 7%;
+    border-top: 1px solid #DDDED5;
+}
+
+.featured-project {
+    background-color: #171717;
+    color: #F5F4ED;
+    padding: 35px;
+    margin-bottom: 35px;
+}
+
+.project-header {
+    display: flex;
+    justify-content: space-between;
+    color: #A5A59B;
+    font-size: 11px;
+    letter-spacing: 1px;
+}
+
+.project-visual {
+    background-color: #292929;
+    min-height: 280px;
+    margin: 30px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.project-logo {
+    width: 90px;
+    height: 90px;
+    border: 2px solid #C4F13A;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.project-logo span {
+    color: #C4F13A;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.project-visual h3 {
+    font-size: 28px;
+}
+
+.project-info {
+    max-width: 750px;
+}
+
+.project-tagline {
+    color: #A5A59B;
+    font-size: 11px;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+}
+
+.project-info h3 {
+    font-size: 35px;
+    margin-bottom: 20px;
+}
+
+.project-info h3 span {
+    color: #C4F13A;
+}
+
+.project-info p {
+    color: #C2C2B9;
+    line-height: 1.8;
+    margin-bottom: 15px;
+}
+
+.project-technologies {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 25px;
+}
+
+.project-technologies span {
+    border: 1px solid #55554E;
+    padding: 8px 14px;
+    font-size: 10px;
+    letter-spacing: 1px;
+}
+
+.other-projects {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+.project-card {
+    border: 1px solid #DDDED5;
+    padding: 35px;
+    min-height: 220px;
+}
+
+.project-card > span {
+    color: #77776F;
+    font-size: 11px;
+    letter-spacing: 1px;
+}
+
+.project-card h3 {
+    font-size: 28px;
+    margin: 30px 0 15px;
+}
+
+.project-card h3 span {
+    color: #C4F13A;
+}
+
+.project-card p {
+    color: #77776F;
+    font-size: 14px;
+}
+
+
+/* ==============================
+   CONTACT
+============================== */
+
+.contact {
+    padding: 110px 7%;
+    border-top: 1px solid #DDDED5;
+}
+
+.contact-content {
+    display: grid;
+    grid-template-columns: 1.5fr 0.7fr;
+    gap: 80px;
+}
+
+.contact-eyebrow {
+    color: #77776F;
+    font-size: 11px;
+    letter-spacing: 2px;
+    margin-bottom: 25px;
+}
+
+.contact-message h3 {
+    font-size: clamp(55px, 7vw, 90px);
+    line-height: 0.95;
+    margin-bottom: 30px;
+}
+
+.contact-message h3 span {
+    color: #C4F13A;
+}
+
+.contact-message > p:not(.contact-eyebrow) {
+    color: #66665F;
+    line-height: 1.8;
+    max-width: 550px;
+    margin-bottom: 30px;
+}
+
+.contact-email {
+    display: inline-block;
+    color: #171717;
+    font-weight: bold;
+    text-decoration: none;
+    border-bottom: 2px solid #C4F13A;
+    padding-bottom: 7px;
+}
+
+.contact-links {
+    display: flex;
+    flex-direction: column;
+}
+
+.contact-link {
+    display: flex;
+    justify-content: space-between;
+    padding: 22px 0;
+    border-bottom: 1px solid #DDDED5;
+    color: #171717;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    transition: color 0.3s;
+}
+
+.contact-link:hover {
+    color: #8AAE12;
+}
+
+
+/* ==============================
+   FOOTER
+============================== */
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 25px 7%;
+    border-top: 1px solid #DDDED5;
+    color: #77776F;
+    font-size: 10px;
+    letter-spacing: 1px;
+}
+
+
+/* ==============================
+   RESPONSIVE - TABLETS AND MOBILES
+============================== */
+
+@media (max-width: 768px) {
+
+    /* Header */
+
+    .header {
+        flex-direction: column;
+        gap: 25px;
+    }
+
+    .navigation {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+    }
+
+
+    /* Hero */
+
+    .hero {
+        grid-template-columns: 1fr;
+        padding: 60px 7%;
+        gap: 45px;
+    }
+
+    .hero-visual {
+        min-height: 350px;
+    }
+
+
+    /* General sections */
+
+    .about,
+    .stack,
+    .work,
+    .contact {
+        padding: 75px 7%;
+    }
+
+
+    /* About */
+
+    .about-item {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+
+    /* Tech Stack */
+
+    .tech-category {
+        padding: 25px 0;
+        margin-bottom: 20px;
+    }
+
+    .tech-grid {
+        gap: 25px;
+    }
+
+    .tech-item {
+        width: 90px;
+    }
+
+    .learning-section {
+        padding: 25px;
+        margin-top: 45px;
+    }
+
+
+    /* Projects */
+
+    .other-projects {
+        grid-template-columns: 1fr;
+    }
+
+
+    /* Contact */
+
+    .contact-content {
+        grid-template-columns: 1fr;
+        gap: 45px;
+    }
+
+
+    /* Footer */
+
+    .footer {
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+}
+
+
+/* ==============================
+   RESPONSIVE - SMALL MOBILES
+============================== */
+
+@media (max-width: 480px) {
+
+    .hero-content h1 {
+        font-size: 43px;
+    }
+
+    .hero-content h2 {
+        font-size: 22px;
+    }
+
+    .hero-visual {
+        min-height: 280px;
+        padding: 30px;
+    }
+
+    .visual-content p {
+        font-size: 55px;
+    }
+
+    .section-heading {
+        margin-bottom: 45px;
+    }
+
+    .tech-grid {
+        gap: 25px 15px;
+    }
+
+    .tech-item {
+        width: 80px;
+    }
+
+    .featured-project {
+        padding: 20px;
+    }
+
+    .project-info h3 {
+        font-size: 29px;
+    }
+
+    .contact-message h3 {
+        font-size: 52px;
+    }
+
+    .contact-email {
+        font-size: 14px;
+    }
+
+}
