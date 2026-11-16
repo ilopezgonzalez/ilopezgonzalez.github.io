@@ -385,6 +385,7 @@ body {
 
 .phone-frame {
     position: relative;
+    isolation: isolate;
     width: 260px;
     padding: 12px;
     background-color: #101010;
@@ -474,7 +475,7 @@ body {
 
 .phone-camera {
     position: absolute;
-    z-index: 2;
+    z-index: 10;
     top: 17px;
     left: 50%;
     width: 55px;
@@ -482,6 +483,7 @@ body {
     transform: translateX(-50%);
     background-color: #101010;
     border-radius: 10px;
+    pointer-events: none;
 }
 
 /* Navigation arrows */
