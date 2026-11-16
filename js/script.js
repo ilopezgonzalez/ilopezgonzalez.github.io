@@ -1,18 +1,19 @@
+
 /* ==============================
    MICARTASEGURA CAROUSEL
 ============================== */
 
-// Obtener las imágenes
+// Obtener las imágenes del carrusel
 const carouselImages = document.querySelectorAll('.carousel-image');
 
-// Obtener los indicadores
+// Obtener los indicadores inferiores
 const carouselDots = document.querySelectorAll('.carousel-dot');
 
-// Obtener los botones
+// Obtener los botones de navegación
 const prevButton = document.querySelector('.carousel-prev');
 const nextButton = document.querySelector('.carousel-next');
 
-// Índice actual
+// Índice de la imagen actual
 let currentSlide = 0;
 
 // Evitar cambios durante la animación
@@ -23,7 +24,7 @@ let isAnimating = false;
 // MOSTRAR UNA CAPTURA
 // ==============================
 
-function showSlide(index) {
+function showSlide(index, direction) {
 
     if (isAnimating || carouselImages.length === 0) return;
 
@@ -36,15 +37,8 @@ function showSlide(index) {
 
     isAnimating = true;
 
-    // Determinar dirección
-    const direction = nextSlide > currentSlide
-        ? 'left'
-        : 'right';
-
-    // Guardar imagen anterior
+    // Obtener imágenes
     const previousImage = carouselImages[currentSlide];
-
-    // Obtener nueva imagen
     const nextImage = carouselImages[nextSlide];
 
     // Actualizar indicadores
@@ -53,9 +47,14 @@ function showSlide(index) {
 
     // Preparar nueva imagen
     nextImage.style.transition = 'none';
-    nextImage.classList.remove('active', 'exit-left', 'exit-right');
 
-    // Posicionar imagen según dirección
+    nextImage.classList.remove(
+        'active',
+        'exit-left',
+        'exit-right'
+    );
+
+    // Posicionar nueva imagen según dirección
     nextImage.style.transform = direction === 'left'
         ? 'translateX(35px) scale(1.06)'
         : 'translateX(-35px) scale(1.06)';
@@ -69,11 +68,12 @@ function showSlide(index) {
     // Restaurar transición
     nextImage.style.transition = '';
 
-    // Activar nueva imagen
+    // Mostrar nueva imagen
     nextImage.classList.add('active');
 
-    // Animar salida anterior
+    // Animar salida de imagen anterior
     previousImage.classList.remove('active');
+
     previousImage.classList.add(
         direction === 'left' ? 'exit-left' : 'exit-right'
     );
@@ -84,7 +84,10 @@ function showSlide(index) {
     // Finalizar animación
     setTimeout(() => {
 
-        previousImage.classList.remove('exit-left', 'exit-right');
+        previousImage.classList.remove(
+            'exit-left',
+            'exit-right'
+        );
 
         previousImage.style.visibility = '';
         previousImage.style.opacity = '';
@@ -108,21 +111,35 @@ if (
     nextButton
 ) {
 
-    // Captura anterior
+    // Flecha izquierda
     prevButton.addEventListener('click', () => {
-        showSlide(currentSlide - 1);
+
+        showSlide(currentSlide - 1, 'right');
+
     });
 
-    // Captura siguiente
+    // Flecha derecha
     nextButton.addEventListener('click', () => {
-        showSlide(currentSlide + 1);
+
+        showSlide(currentSlide + 1, 'left');
+
     });
 
-    // Selección mediante indicadores
+
+    // ==============================
+    // INDICADORES INFERIORES
+    // ==============================
+
     carouselDots.forEach((dot, index) => {
 
         dot.addEventListener('click', () => {
-            showSlide(index);
+
+            const direction = index > currentSlide
+                ? 'left'
+                : 'right';
+
+            showSlide(index, direction);
+
         });
 
     });
