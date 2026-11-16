@@ -3,105 +3,22 @@
    MICARTASEGURA CAROUSEL
 ============================== */
 
-// Obtener las imágenes del carrusel
+// Obtener elementos
 const carouselImages = document.querySelectorAll('.carousel-image');
-
-// Obtener los indicadores inferiores
 const carouselDots = document.querySelectorAll('.carousel-dot');
 
-// Obtener los botones de navegación
 const prevButton = document.querySelector('.carousel-prev');
 const nextButton = document.querySelector('.carousel-next');
 
-// Índice de la imagen actual
+// Estado del carrusel
 let currentSlide = 0;
-
-// Evitar cambios durante la animación
 let isAnimating = false;
 
-
-// ==============================
-// MOSTRAR UNA CAPTURA
-// ==============================
-
-function showSlide(index, direction) {
-
-    if (isAnimating || carouselImages.length === 0) return;
-
-    // Calcular nueva posición
-    const nextSlide =
-        (index + carouselImages.length) % carouselImages.length;
-
-    // Evitar animación si se selecciona la misma imagen
-    if (nextSlide === currentSlide) return;
-
-    isAnimating = true;
-
-    // Obtener imágenes
-    const previousImage = carouselImages[currentSlide];
-    const nextImage = carouselImages[nextSlide];
-
-    // Actualizar indicadores
-    carouselDots[currentSlide].classList.remove('active');
-    carouselDots[nextSlide].classList.add('active');
-
-    // Preparar nueva imagen
-    nextImage.style.transition = 'none';
-
-    nextImage.classList.remove(
-        'active',
-        'exit-left',
-        'exit-right'
-    );
-
-    // Posicionar nueva imagen según dirección
-    nextImage.style.transform = direction === 'left'
-        ? 'translateX(35px) scale(1.06)'
-        : 'translateX(-35px) scale(1.06)';
-
-    nextImage.style.opacity = '0';
-    nextImage.style.visibility = 'visible';
-
-    // Forzar actualización de estilos
-    void nextImage.offsetWidth;
-
-    // Restaurar transición
-    nextImage.style.transition = '';
-
-    // Mostrar nueva imagen
-    nextImage.classList.add('active');
-
-    // Animar salida de imagen anterior
-    previousImage.classList.remove('active');
-
-    previousImage.classList.add(
-        direction === 'left' ? 'exit-left' : 'exit-right'
-    );
-
-    // Actualizar índice
-    currentSlide = nextSlide;
-
-    // Finalizar animación
-    setTimeout(() => {
-
-        previousImage.classList.remove(
-            'exit-left',
-            'exit-right'
-        );
-
-        previousImage.style.visibility = '';
-        previousImage.style.opacity = '';
-        previousImage.style.transform = '';
-
-        isAnimating = false;
-
-    }, 650);
-
-}
+const animationDuration = 650;
 
 
 // ==============================
-// BOTONES DE NAVEGACIÓN
+// INICIALIZAR CARRUSEL
 // ==============================
 
 if (
@@ -111,23 +28,134 @@ if (
     nextButton
 ) {
 
-    // Flecha izquierda
-    prevButton.addEventListener('click', () => {
+    // Limpiar estados iniciales
+    carouselImages.forEach((image, index) => {
 
-        showSlide(currentSlide - 1, 'right');
+        image.classList.remove(
+            'active',
+            'enter-left',
+            'enter-right',
+            'exit-left',
+            'exit-right'
+        );
+
+        // Eliminar estilos inline antiguos
+        image.style.removeProperty('opacity');
+        image.style.removeProperty('visibility');
+        image.style.removeProperty('transform');
+        image.style.removeProperty('transition');
+
+        // Mostrar únicamente la primera captura
+        if (index === 0) {
+            image.classList.add('active');
+        }
 
     });
 
-    // Flecha derecha
-    nextButton.addEventListener('click', () => {
+    // Inicializar indicadores
+    carouselDots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === 0);
+    });
 
-        showSlide(currentSlide + 1, 'left');
+
+    // ==============================
+    // MOSTRAR UNA CAPTURA
+    // ==============================
+
+    function showSlide(index, direction) {
+
+        if (isAnimating) return;
+
+        const nextSlide =
+            (index + carouselImages.length) % carouselImages.length;
+
+        if (nextSlide === currentSlide) return;
+
+        isAnimating = true;
+
+        const previousImage = carouselImages[currentSlide];
+        const nextImage = carouselImages[nextSlide];
+
+        // Limpiar clases de la nueva imagen
+        nextImage.classList.remove(
+            'active',
+            'enter-left',
+            'enter-right',
+            'exit-left',
+            'exit-right'
+        );
+
+        // Limpiar posibles estilos inline
+        nextImage.style.removeProperty('opacity');
+        nextImage.style.removeProperty('visibility');
+        nextImage.style.removeProperty('transform');
+        nextImage.style.removeProperty('transition');
+
+        // Preparar entrada según dirección
+        nextImage.classList.add(
+            direction === 'left' ? 'enter-right' : 'enter-left'
+        );
+
+        // Forzar actualización de estilos
+        void nextImage.offsetWidth;
+
+        // Iniciar entrada
+        nextImage.classList.remove('enter-left', 'enter-right');
+        nextImage.classList.add('active');
+
+        // Iniciar salida de la imagen anterior
+        previousImage.classList.remove('active');
+
+        previousImage.classList.add(
+            direction === 'left' ? 'exit-left' : 'exit-right'
+        );
+
+        // Actualizar indicadores
+        carouselDots[currentSlide].classList.remove('active');
+        carouselDots[nextSlide].classList.add('active');
+
+        // Actualizar índice
+        currentSlide = nextSlide;
+
+        // Limpiar animación al finalizar
+        setTimeout(() => {
+
+            previousImage.classList.remove(
+                'exit-left',
+                'exit-right'
+            );
+
+            isAnimating = false;
+
+        }, animationDuration);
+
+    }
+
+
+    // ==============================
+    // FLECHA IZQUIERDA
+    // ==============================
+
+    prevButton.addEventListener('click', () => {
+
+        showSlide(currentSlide - 1, 'left');
 
     });
 
 
     // ==============================
-    // INDICADORES INFERIORES
+    // FLECHA DERECHA
+    // ==============================
+
+    nextButton.addEventListener('click', () => {
+
+        showSlide(currentSlide + 1, 'right');
+
+    });
+
+
+    // ==============================
+    // INDICADORES
     // ==============================
 
     carouselDots.forEach((dot, index) => {
@@ -135,8 +163,8 @@ if (
         dot.addEventListener('click', () => {
 
             const direction = index > currentSlide
-                ? 'left'
-                : 'right';
+                ? 'right'
+                : 'left';
 
             showSlide(index, direction);
 
