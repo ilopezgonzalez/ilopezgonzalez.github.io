@@ -368,6 +368,7 @@ body {
 }
 
 
+
 /* ==============================
    MICARTASEGURA CAROUSEL
 ============================== */
@@ -403,7 +404,7 @@ body {
     background-color: #FFFFFF;
 }
 
-/* Screenshots - Smooth transition */
+/* Screenshots */
 
 .carousel-image {
     position: absolute;
@@ -414,8 +415,8 @@ body {
     object-fit: contain;
 
     opacity: 0;
-    z-index: 0;
     visibility: hidden;
+    z-index: 0;
 
     transform: translateX(35px) scale(1.06);
 
@@ -424,19 +425,39 @@ body {
         transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+/* Imagen activa */
+
 .carousel-image.active {
     opacity: 1;
-    z-index: 2;
     visibility: visible;
+    z-index: 2;
     transform: translateX(0) scale(1);
+}
+
+/* Entrada desde la derecha */
+
+.carousel-image.enter-right {
+    opacity: 0;
+    visibility: visible;
+    z-index: 2;
+    transform: translateX(35px) scale(1.06);
+}
+
+/* Entrada desde la izquierda */
+
+.carousel-image.enter-left {
+    opacity: 0;
+    visibility: visible;
+    z-index: 2;
+    transform: translateX(-35px) scale(1.06);
 }
 
 /* Salida hacia la izquierda */
 
 .carousel-image.exit-left {
     opacity: 0;
-    z-index: 1;
     visibility: visible;
+    z-index: 1;
     transform: translateX(-35px) scale(0.96);
 }
 
@@ -444,8 +465,8 @@ body {
 
 .carousel-image.exit-right {
     opacity: 0;
-    z-index: 1;
     visibility: visible;
+    z-index: 1;
     transform: translateX(35px) scale(0.96);
 }
 
@@ -518,6 +539,15 @@ body {
     outline: 2px solid #C4F13A;
     outline-offset: 4px;
 }
+
+/* Reduced motion */
+
+@media (prefers-reduced-motion: reduce) {
+    .carousel-image {
+        transition: none;
+    }
+}
+
 
 
 /* ==============================
