@@ -419,10 +419,10 @@ body {
     visibility: hidden;
     z-index: 0;
 
-    transform: translateX(35px) scale(1.06);
+    transform: translateX(100%);
 
     transition:
-        opacity 0.5s ease,
+        opacity 0.6s ease,
         transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -432,7 +432,7 @@ body {
     opacity: 1;
     visibility: visible;
     z-index: 2;
-    transform: translateX(0) scale(1);
+    transform: translateX(0);
 }
 
 /* Entrada desde la derecha */
