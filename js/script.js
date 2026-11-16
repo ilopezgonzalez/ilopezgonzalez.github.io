@@ -3,23 +3,108 @@
    MICARTASEGURA CAROUSEL
 ============================== */
 
-// Obtener elementos
 const carouselImages = document.querySelectorAll('.carousel-image');
 const carouselDots = document.querySelectorAll('.carousel-dot');
 
 const prevButton = document.querySelector('.carousel-prev');
 const nextButton = document.querySelector('.carousel-next');
 
-// Estado del carrusel
 let currentSlide = 0;
 let isAnimating = false;
 
-const animationDuration = 650;
+const animationDuration = 600;
 
 
-// ==============================
-// INICIALIZAR CARRUSEL
-// ==============================
+/* ==============================
+   MOSTRAR CAPTURA
+============================== */
+
+function showSlide(index, direction) {
+
+    if (
+        isAnimating ||
+        carouselImages.length === 0 ||
+        carouselImages.length !== carouselDots.length
+    ) {
+        return;
+    }
+
+    if (index === currentSlide) return;
+
+    isAnimating = true;
+
+    const currentImage = carouselImages[currentSlide];
+
+    // Cálculo circular
+    const nextIndex =
+        (index + carouselImages.length) % carouselImages.length;
+
+    const nextImage = carouselImages[nextIndex];
+
+    // Limpiar clases de la captura entrante
+    nextImage.classList.remove('active', 'exit-left', 'exit-right');
+
+    // Preparar la nueva captura fuera de pantalla
+    nextImage.style.transition = 'none';
+    nextImage.style.transform =
+        direction === 'next'
+            ? 'translateX(100%)'
+            : 'translateX(-100%)';
+
+    nextImage.style.opacity = '0';
+    nextImage.style.visibility = 'visible';
+    nextImage.style.zIndex = '3';
+
+    // Forzar actualización del navegador
+    nextImage.offsetHeight;
+
+    // Activar transición
+    nextImage.style.transition = '';
+
+    // Desplazar captura actual
+    currentImage.style.zIndex = '2';
+    currentImage.style.transform =
+        direction === 'next'
+            ? 'translateX(-100%)'
+            : 'translateX(100%)';
+
+    currentImage.style.opacity = '0';
+
+    // Mostrar nueva captura
+    nextImage.classList.add('active');
+    nextImage.style.transform = 'translateX(0)';
+    nextImage.style.opacity = '1';
+
+    // Actualizar indicadores
+    carouselDots[currentSlide].classList.remove('active');
+    carouselDots[nextIndex].classList.add('active');
+
+    currentSlide = nextIndex;
+
+    // Finalizar animación
+    setTimeout(() => {
+
+        currentImage.classList.remove('active');
+        currentImage.style.transition = '';
+        currentImage.style.transform = '';
+        currentImage.style.opacity = '';
+        currentImage.style.visibility = '';
+        currentImage.style.zIndex = '';
+
+        nextImage.style.transform = '';
+        nextImage.style.opacity = '';
+        nextImage.style.visibility = '';
+        nextImage.style.zIndex = '';
+
+        isAnimating = false;
+
+    }, animationDuration);
+}
+
+
+/* ==============================
+   NAVEGACIÓN
+============================== */
 
 if (
     carouselImages.length > 0 &&
@@ -28,143 +113,27 @@ if (
     nextButton
 ) {
 
-    // Limpiar estados iniciales
-    carouselImages.forEach((image, index) => {
-
-        image.classList.remove(
-            'active',
-            'enter-left',
-            'enter-right',
-            'exit-left',
-            'exit-right'
-        );
-
-        // Eliminar estilos inline antiguos
-        image.style.removeProperty('opacity');
-        image.style.removeProperty('visibility');
-        image.style.removeProperty('transform');
-        image.style.removeProperty('transition');
-
-        // Mostrar únicamente la primera captura
-        if (index === 0) {
-            image.classList.add('active');
-        }
-
-    });
-
-    // Inicializar indicadores
-    carouselDots.forEach((dot, index) => {
-        dot.classList.toggle('active', index === 0);
-    });
-
-
-    // ==============================
-    // MOSTRAR UNA CAPTURA
-    // ==============================
-
-    function showSlide(index, direction) {
-
-        if (isAnimating) return;
-
-        const nextSlide =
-            (index + carouselImages.length) % carouselImages.length;
-
-        if (nextSlide === currentSlide) return;
-
-        isAnimating = true;
-
-        const previousImage = carouselImages[currentSlide];
-        const nextImage = carouselImages[nextSlide];
-
-        // Limpiar clases de la nueva imagen
-        nextImage.classList.remove(
-            'active',
-            'enter-left',
-            'enter-right',
-            'exit-left',
-            'exit-right'
-        );
-
-        // Limpiar posibles estilos inline
-        nextImage.style.removeProperty('opacity');
-        nextImage.style.removeProperty('visibility');
-        nextImage.style.removeProperty('transform');
-        nextImage.style.removeProperty('transition');
-
-        // Preparar entrada según dirección
-        nextImage.classList.add(
-            direction === 'left' ? 'enter-right' : 'enter-left'
-        );
-
-        // Forzar actualización de estilos
-        void nextImage.offsetWidth;
-
-        // Iniciar entrada
-        nextImage.classList.remove('enter-left', 'enter-right');
-        nextImage.classList.add('active');
-
-        // Iniciar salida de la imagen anterior
-        previousImage.classList.remove('active');
-
-        previousImage.classList.add(
-            direction === 'left' ? 'exit-left' : 'exit-right'
-        );
-
-        // Actualizar indicadores
-        carouselDots[currentSlide].classList.remove('active');
-        carouselDots[nextSlide].classList.add('active');
-
-        // Actualizar índice
-        currentSlide = nextSlide;
-
-        // Limpiar animación al finalizar
-        setTimeout(() => {
-
-            previousImage.classList.remove(
-                'exit-left',
-                'exit-right'
-            );
-
-            isAnimating = false;
-
-        }, animationDuration);
-
-    }
-
-
-    // ==============================
-    // FLECHA IZQUIERDA
-    // ==============================
-
+    // Captura anterior
     prevButton.addEventListener('click', () => {
 
-        showSlide(currentSlide - 1, 'left');
+        showSlide(currentSlide - 1, 'prev');
 
     });
 
-
-    // ==============================
-    // FLECHA DERECHA
-    // ==============================
-
+    // Captura siguiente
     nextButton.addEventListener('click', () => {
 
-        showSlide(currentSlide + 1, 'right');
+        showSlide(currentSlide + 1, 'next');
 
     });
 
-
-    // ==============================
-    // INDICADORES
-    // ==============================
-
+    // Indicadores
     carouselDots.forEach((dot, index) => {
 
         dot.addEventListener('click', () => {
 
-            const direction = index > currentSlide
-                ? 'right'
-                : 'left';
+            const direction =
+                index > currentSlide ? 'next' : 'prev';
 
             showSlide(index, direction);
 
