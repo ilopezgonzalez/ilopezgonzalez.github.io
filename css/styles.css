@@ -415,7 +415,6 @@ body {
 
     opacity: 0;
     visibility: hidden;
-
     transform: translateX(35px) scale(1.06);
 
     transition:
@@ -427,8 +426,29 @@ body {
 .carousel-image.active {
     opacity: 1;
     visibility: visible;
-
     transform: translateX(0) scale(1);
+}
+
+/* Salida de la imagen */
+
+.carousel-image.exit-left {
+    opacity: 0;
+    visibility: visible;
+    transform: translateX(-35px) scale(0.96);
+}
+
+.carousel-image.exit-right {
+    opacity: 0;
+    visibility: visible;
+    transform: translateX(35px) scale(0.96);
+}
+
+/* Accesibilidad */
+
+@media (prefers-reduced-motion: reduce) {
+    .carousel-image {
+        transition: none;
+    }
 }
 
 /* Smartphone camera */
