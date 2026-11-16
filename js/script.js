@@ -1,20 +1,22 @@
-
 /* ==============================
    MICARTASEGURA CAROUSEL
 ============================== */
 
-// Obtener las imágenes del carrusel
+// Obtener las imágenes
 const carouselImages = document.querySelectorAll('.carousel-image');
 
-// Obtener los indicadores inferiores
+// Obtener los indicadores
 const carouselDots = document.querySelectorAll('.carousel-dot');
 
-// Obtener los botones de navegación
+// Obtener los botones
 const prevButton = document.querySelector('.carousel-prev');
 const nextButton = document.querySelector('.carousel-next');
 
-// Índice de la imagen actual
+// Índice actual
 let currentSlide = 0;
+
+// Evitar cambios durante la animación
+let isAnimating = false;
 
 
 // ==============================
@@ -23,16 +25,74 @@ let currentSlide = 0;
 
 function showSlide(index) {
 
-    // Ocultar captura actual
-    carouselImages[currentSlide].classList.remove('active');
+    if (isAnimating || carouselImages.length === 0) return;
+
+    // Calcular nueva posición
+    const nextSlide =
+        (index + carouselImages.length) % carouselImages.length;
+
+    // Evitar animación si se selecciona la misma imagen
+    if (nextSlide === currentSlide) return;
+
+    isAnimating = true;
+
+    // Determinar dirección
+    const direction = nextSlide > currentSlide
+        ? 'left'
+        : 'right';
+
+    // Guardar imagen anterior
+    const previousImage = carouselImages[currentSlide];
+
+    // Obtener nueva imagen
+    const nextImage = carouselImages[nextSlide];
+
+    // Actualizar indicadores
     carouselDots[currentSlide].classList.remove('active');
+    carouselDots[nextSlide].classList.add('active');
 
-    // Calcular siguiente posición
-    currentSlide = (index + carouselImages.length) % carouselImages.length;
+    // Preparar nueva imagen
+    nextImage.style.transition = 'none';
+    nextImage.classList.remove('active', 'exit-left', 'exit-right');
 
-    // Mostrar nueva captura
-    carouselImages[currentSlide].classList.add('active');
-    carouselDots[currentSlide].classList.add('active');
+    // Posicionar imagen según dirección
+    nextImage.style.transform = direction === 'left'
+        ? 'translateX(35px) scale(1.06)'
+        : 'translateX(-35px) scale(1.06)';
+
+    nextImage.style.opacity = '0';
+    nextImage.style.visibility = 'visible';
+
+    // Forzar actualización de estilos
+    void nextImage.offsetWidth;
+
+    // Restaurar transición
+    nextImage.style.transition = '';
+
+    // Activar nueva imagen
+    nextImage.classList.add('active');
+
+    // Animar salida anterior
+    previousImage.classList.remove('active');
+    previousImage.classList.add(
+        direction === 'left' ? 'exit-left' : 'exit-right'
+    );
+
+    // Actualizar índice
+    currentSlide = nextSlide;
+
+    // Finalizar animación
+    setTimeout(() => {
+
+        previousImage.classList.remove('exit-left', 'exit-right');
+
+        previousImage.style.visibility = '';
+        previousImage.style.opacity = '';
+        previousImage.style.transform = '';
+
+        isAnimating = false;
+
+    }, 650);
 
 }
 
